@@ -38,7 +38,19 @@ export default function Scoreboard(props: prop) {
   const [turn, setTurn] = useState(props.id == props.options.playerTurn);
   const [dices, setDices] = useState(props.options.dices);
   // console.log(turn);
+
+  const initScoreBoard = () => {
+    setScores(data);
+    setTurn(props.id == props.options.playerTurn);
+  }
     
+  useEffect(() => {
+    if(props.options.reset){
+      initScoreBoard();
+      props.options.setReset(false);
+    }
+  }, [props.options.reset])
+
   useEffect(() => { 
     setDices(props.options.dices);
     onExpectedScore(props.options.dices);
@@ -156,7 +168,7 @@ export default function Scoreboard(props: prop) {
         data={scores}
         renderItem={renderScore}
       />
-      <Button title="End" onPress={endTurn}/>
+      {/* <Button title="End" onPress={endTurn}/> */}
     </View>
   );
 }
